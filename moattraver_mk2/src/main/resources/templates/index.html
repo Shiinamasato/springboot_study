@@ -1,11 +1,48 @@
 <!DOCTYPE html>
-<html xmlns:th="https://www.thymeleaf.org">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>moat Travel</title>
-    </head>
-    <body>
-        <p>Hello, world!</p>
-    </body>
+<html xmlns:th="https://www.thymeleaf.org"
+xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <meta th:replace="~{fragment :: meta}" />
+    <link th:replace="~{fragment :: styles}" />
+
+    <title>moat Travel</title>
+</head>
+
+<body>
+    <p>Hello, world!</p>
+
+    <div class="moattravel-wrapper">
+
+        <!-- ヘッダー -->
+        <header th:replace="~{fragment :: header}"></header>
+
+		<main>
+		    <div class="container pt-4 pb-5 moattravel-container">
+
+		        <div th:if="${param.loggedIn}" class="alert alert-info">
+		            ログインしました。
+		        </div>
+
+		        <div th:if="${param.loggedOut}" class="alert alert-info">
+		            ログアウトしました。
+		        </div>
+
+		        <div th:if="${successMessage}" class="alert alert-info">
+		            <span th:text="${successMessage}"></span>
+		        </div>
+
+		    </div>
+		</main>
+
+        <!-- フッター -->
+        <footer th:replace="~{fragment :: footer}"></footer>
+
+    </div>
+
+    <script th:replace="~{fragment :: scripts}"></script>
+</body>
 </html>
