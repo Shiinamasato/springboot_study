@@ -14,18 +14,18 @@ import org.springframework.security.web.SecurityFilterChain;
 @EnableMethodSecurity
 public class WebSecurityConfig {
 
-	@Bean
-	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-
-		http
-				.authorizeHttpRequests((requests) -> requests
-						.requestMatchers("/css/**", "/images/**", "/js/**", "/storage/**", "/").permitAll() // すべてのユーザーにアクセスを許可するURL
-						.requestMatchers("/css/**", "/images/**", "/js/**", "/storage/**", "/", "/signup/**")
-						.permitAll() // すべてのユーザーにアクセスを許可するURL
-						.requestMatchers("/admin/**").hasRole("ADMIN") // 管理者にのみアクセスを許可するURL
-						.anyRequest().authenticated() // 上記以外のURLはログインが必要（会員または管理者のどちらでもOK）
-				)
-
+    @Bean
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+        http
+            .authorizeHttpRequests((requests) -> requests
+                // すべてのユーザーにアクセスを許可するURL
+                .requestMatchers("/css/**", "/images/**", "/js/**", "/storage/**", "/", "/signup/**", "/houses").permitAll()
+                // 管理者のみアクセス可能
+                .requestMatchers("/admin/**").hasRole("ADMIN")
+                // 上記以外はログイン必須
+                .anyRequest().authenticated()
+            )
+        
 				.formLogin((form) -> form
 						.loginPage("/login")
 						.loginProcessingUrl("/login")
